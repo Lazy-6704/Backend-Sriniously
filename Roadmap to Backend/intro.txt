@@ -1,1 +1,135 @@
-New text
+1. High level understanding
+	-> how a request is done through the API and how a Transaction heppens.
+2. HTTP Protocal 
+	-> Pre-Flight request(request made before the transaction usually GET,POST,HEAD).
+	-> HTTP Caching(eTage,Max age headers)
+	-> HTTP Codes(403,404,500,etc.)
+	-> Difference between HTTP1.0,HTTP2.0,HTTP3.0.
+	-> when to use what type of request(GET,POST,etc.) and how to maintaine them.
+3. Routing
+	-> PATH, Query parameters
+	-> Types of Routs(Static,Dynamic,Hierachical,etc.)
+	-> how to do API versioning and different Techniques.
+	-> Optimizing,Sheduling,Securing the Route
+4. Serializing & Deserializing
+	-> how the data is sent to the client through the internet and how the client recieves and reads the data.
+	-> Types of data format used JSON,XML,Binary,ETC., the Datatypes used in data, and how the read the Data.
+	-> Error handiling - invalid data, data conversion error, timestamp issues, handling NULL values,etc..
+5. Authentication & Authorization
+	-> Types of Authentications - Basic Authentication,token Authentication,Session,JWT,cookies.
+	-> Deep Dive on OAuth, OpenID connect, Multifactor Authentication, Salting, hashing.
+	-> Cryptographic techniques used in Authorization.
+	-> ABack, RBack,ReBack.
+	-> Securing cookies,avoiding csrf,XSS, MITM audit loging(monitering the transaction)
+	-> prevent from attacking during the transaction.
+	-> handling Edge cases like Rate limiting, Account lockout(incorrect username/Password).
+6. Validation & Transformation
+	-> Synctatic Validation(checking for valid credentials email,phone number).
+	-> Semantic validation(DOB cant be greater than current date / age of a person should be 1-120).
+	-> Type Validation (validates the Datatype of the input).
+	-> What is and Difference between Client side Validation and Server side Validation.
+	-> Transformation is TypeCasting(converting the datatypes), Normalization, Sanitization(Securing the data from injections), Complex Validation logic, relation based Validation(Depends on multiple inputs), Conditional Validation, Chain Validation, errorhandling Validation(sending meaningful error to frountend).
+7. Middlewares
+	-> Sequence passing a request form one stage to another till it reaches final handler
+	-> Order a Middleware(Chaining): log the request -> check the Authentication of user -> validation -> Route handling -> Error handling
+8. Request Context
+	-> the Metadata that is pased thought the the request.
+	-> lifecycle of a request,Maintaining the state of the request, sharing the data accross different layers without Coupling.
+	-> different components of a request - HTTP Method, URL headers, Query Parameters, body structure, session and user info..
+	-> Tracking and loging info. like unique request_id/Trace_id
+	-> request specific data like custom data in injected during request life cycle lke caching data,Permission checks(rate limiting, tracing, loging)
+	-> prevent memory overhead(memory leaks,avoid tightly coupling components)
+9. Handlers and Components
+	-> MVC Patterns, handlers & controllers and services and responsibilities.
+	-> Centralized Error handlers,consistent success and error message formates and how to implement them in controllers
+10. CRUD deepdive
+	-> How CRUD operations map HTTP Methods and what are the API's accociated with each method.
+11. REST/FAST Best Practices
+	-> Principle of designing API's around resources and sticking to HTTP semantics.
+	-> best practices for filtering and pagenation, Versioning(URI versioning, Header versioning, Query string Media Type).
+	-> Designe API's (with OpenAPI), Content Negotittion, Capturing exceptions and providing meaningful messages, client side caching, E-taxes, optimizing large request and response
+12. Databases
+	-> Relational and Non-Relational Databases
+	-> ACID Properties, CAP theorem
+	-> basic Quesing and Joins, Database Designe indexing, Query optimization, caching connection pooling, Intrgrity(Constraints & validation) of transaction and Concurrency
+	-> Working of ORM, when to use an ORM and it's tradeoffs, Database Miration.
+13. Business Logic layer (BLL)
+	-> 3-layers of 
+		1. Presentation layer - Deals with users data(sending and recieving the data)
+		2. Busuness logic layer - Deals with CORE business Logic (uses dataaccess layer behind the scenes)
+		3. Data Access layer - Deals with data Quering, Insertion, Deletion, etc..
+14. Caching
+	-> Types of caching - Inmemory caching, Browser caching, Database caching.
+	-> The need of client side caching & server side caching.
+	-> Caching Strategies: Cache Aside, right through, right behind/right back.
+	-> Cache eviction Strategies: LRU, LFU, TITO, FIFO
+	-> levels of Caching:
+		1. Inmemory - mostfrequently used data is stored here
+		2. Network Disrtibuter - less frequently used data is stored here(slower/larger)
+		3. hierarchial caching(combination of the Above)
+15. Transactional Emails
+16. Task Queueing & Scheduling
+	-> Queueing usecases: Batch Processing, sending email, image proessing, API integration, webhooks
+	-> scheduling usecases: recoring notifications, reminders, data Synchronization, completing concurrent tasks and waiting to complete all of them at the same time, Task dependencies
+	-> Implement retries, Task Prioritization & Rate limiting
+17. Elasticsearch
+	-> Stores indexed data and executes search/aggregation queries.
+	-> Inverted index term frequency,Inverse document Frequency, Segments and Shards.
+	-> Usecases - Providing a type ahead experience, log analytics, social media search.
+	-> optimize search Performance by tweaking text vs keyword feilds understanding alalyzers and boosting and pagenation
+	-> Advance Search Patterns - Filteering, Aggregation, Fuzzy Search
+18. Error Handling
+	-> Handle errors like syntax,runtime,logical,etc., have a failsafe or failfast graceful degradation or prevention of errors.
+	-> Practices for error handling - Catching early, Not Swallowing errors, custom error typs, failing gracefully, logging errors, using Stack traces
+	-> Error messaging Tools - Sentry, elk Stack.(email,slack based alerts)
+19. Config Management
+	-> crucial for maintaining system integrity and performance.
+	-> It involves tracking, controlling, and documenting all changes to configuration items.
+	-> Decouples environment Specific settings from Application Logic
+	-> Types of Config Management
+		1. Static configs - DB Credentials, API endpoints.
+		2. Dynamic configs - Feature Flags, Rate limits.
+		3. Sensitive configs - Credentials,Tokens,Secrets.
+	-> Different sources of configs - environment file, JSON file, yaml file.
+	-> Difference in using Environment Variables vs Commandline Flags vs Static Files.
+20. Logging, Monitoring, and Observability
+	-> Logging Types - System logging, Application Accesss, Security Logs.
+	-> levels of Logs - DEBUG, INFO, WARNING, ERROR, CRITICAL.
+	-> Practices - Centralized logging, log rotation, retension contextual and meaningful logs, avoiding sensitive data like passwords and API keys.
+	-> Types of Monitering - Infrastructure monitoring, Application Performance monitering, uptime monitering.
+	-> Tools for monitering - Prometheus, Grafana.
+	-> 3-pillers of Observability - logs, metrices, traces.
+21. Graceful Shutdown
+	-> why do we need this(restart)?
+	-> Steps: capturing a Signal -> stops accepting requests -> completes an inflight request -> closes external resources(DB connection,openfiles,etc) -> Terminates the Application
+22. Security
+23. Scaling and Performance
+	-> Performance metrics - response time, resource utilization, identifying bottlenecks, caching, DataBase optimization
+	-> need to scale the data to prevent data injection(memory leaks), min. DB load and improve performance for large datasets.
+24. Concurrency and Parallelism
+	-> Concurrency helps in IO bound tasks and Parallelism helps in CPU bound tasks.
+25. Object Storage & Large files
+	-> Data management(quantity) in object storages(S3 bucket) and large files using Chunking, Streaming, multiart file upload.
+26. Realtime Backend Systems
+	-> Web Sockets, Servers & Events, Pubs of Architecture
+27. Testing & Code Quality
+	-> Types of Teating: unit testing, integration testing, end-to-end testing, Functional testing, regression testing, Performance testing, Load & Stress testing, user acceptency testing, Security Testing.
+	-> what is Test driven deveopment? how to automate test in CICD environment, manage code quality with external linting and formatting tools
+	-> measures of code quality and Coverage: 
+		1. Quality metrics -> Cyclomatic complexity(counts no. of paths through the code).
+		2. Maintainability index
+28. 12 Factor App Principles
+	->
+29. OPENAPI Standards
+	-> Importance for API documentation and automation.
+	-> Tools: Swagger UI, Postman.
+	-> API-first development methodology.
+30. Webhooks
+	-> Use cases and differences from APIs (push vs polling).
+	-> Key components: URL, event triggers, payload, response handling.
+	-> Best practices: signature verification, HTTPS, retry logic, logging.
+	-> Real-world examples: Stripe, GitHub, Slack.
+31. Devops for BackendEngineers
+	-> CI/CD pipeline, infrastructure as code, config management, version control.
+	-> Containerization (Docker), orchestration (Kubernetes).
+	-> Deployment strategies: horizontal vs vertical scaling, blue-green, rolling deployments.
